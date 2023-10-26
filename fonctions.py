@@ -1,6 +1,7 @@
 # fonctions.py
 
 import random
+from shutil import move
 import sys
 
 
@@ -152,7 +153,8 @@ def distribute_cards(cards_per_player, cards):
     deck.extend(cards_list)
 
 def drop_card(player_name):
-    card_to_remove = input(f">>> Enter the card you want to remove (e.g., '2 ❤' <=> '2 h'): ")
+    print("\n>>> Enter the card you want to remove: ")
+    card_to_remove = input("('2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 c'; '2 ♤' <=> '2 c') ")
     
     rcard = card_to_remove.split()
     for shorthand, full_suit in suit_mapping.items():
@@ -164,7 +166,7 @@ def drop_card(player_name):
         if card_to_remove in hand:
             players_hands[player_name].remove(card_to_remove)
             add_pile(card_to_remove)
-            print(f"\nDropped {card_to_remove}")
+            print(f"\nDropped {card_to_remove}")    
             return card_to_remove
 
 def display_player_hand(player_name, real_name):
@@ -249,11 +251,13 @@ def sort_player_hand(player_name):
     players_hands[player_name] = sort_cards(players_hands[player_name])
 
 def single_turn(player_name, real_name):
+    move = None
+
     while True:
-        
         display_player_hand(player_name, real_name)
-        display_pile()
-        # print("\nGlobal var Pile: ", pile)
+        
+        if move == None or move.lower() != 'p':
+            display_pile()
 
         act = input("\n>>> Choose an action:\n"
                         "(M or m)ove Cards\n"
@@ -265,6 +269,8 @@ def single_turn(player_name, real_name):
                         "(X or x)exit\n"
                         "Enter your choice: ")
         
+        move = act
+
         # Deck = 0
         if len(deck) == 0:
             print("\nIt's a draw! No winner this time. 😔")
@@ -273,7 +279,8 @@ def single_turn(player_name, real_name):
 
         #           MOVE
         elif act.lower() == 'm':
-            card_to_move = input("\n>>> Card to move? (e.g., '2 ❤' <=> '2 h') ")
+            print("\n>>> Card to move? ")
+            card_to_move = input("('2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 c'; '2 ♤' <=> '2 c') ")
 
             rcard = card_to_move.split()
             for shorthand, full_suit in suit_mapping.items():
@@ -285,7 +292,8 @@ def single_turn(player_name, real_name):
                 input(f"\n>>> ERROR: {card_to_move} is not in your hand. Enter to continue ▶ ")
                 continue
 
-            move_where = input("\n>>> Where? before which card? (e.g., '2 ❤' <=> '2 h') ")
+            print("\n>>> Where? before which card?")
+            move_where = input("('2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 c'; '2 ♤' <=> '2 c') ")
 
             if move_where:
                 rmove_where = move_where.split()
@@ -381,28 +389,35 @@ def next_player(current_player):
 def game(num_players=2):
     print("\n" * 100)
     print(
-        """
-        \033[1m\033[32mWelcome to mini Rummy\033[0m
-        
-        Please review the rules carefully before starting the game.
+    """
+    \033[1m\033[32mWelcome to mini Rummy\033[0m
+    
+    Please review the rules carefully before starting the game.
 
-        \033[1m\033[31mRules:\033[0m
-        - The game is played by 2 players.
-        - Each player will receive 10 cards.
-        - You must create 3 sets of cards, 2 sets with 3 cards, and 1 set with 4 cards.
-        - At least one valid "book" and one valid "run" are required.
-        - A book = same value but from different suits.
-        - A run = sequence of number from same suit.
-        - During each turn, the player should choose a card either from the pile or from the deck to create sets.
-        - After selecting a card, the player must discard a card onto the pile.
-        - A player wins when they have successfully formed all the required sets of cards. 
-            (which include 2 sets of 3 cards each and 1 set of 4 cards, 
-            and have also met the conditions of having at least one valid book and one valid run.)
-        """
+    \033[1m\033[31mRules:\033[0m
+    - The game is played by 2 players.
+    - Each player will receive 10 cards.
+    - You must create 3 sets of cards, 2 sets with 3 cards, and 1 set with 4 cards.
+    - At least one valid "book" and one valid "run" are required.
+    - A book = same value but from different suits.
+    - A run = sequence of number from same suit.
+    - During each turn, the player should choose a card either from the pile or from the deck to create sets.
+    - After selecting a card, the player must discard a card onto the pile.
+    - A player wins when they have successfully formed all the required sets of cards. 
+        (which include 2 sets of 3 cards each and 1 set of 4 cards, 
+        and have also met the conditions of having at least one valid book and one valid run.)
+    """
     )
 
     player1_name = input("\nEnter Player 1's name: ")
+    while not player1_name.strip(): 
+        print("Name cannot be empty. Please enter a valid name.")
+        player1_name = input("Enter Player 1's name: ")
+
     player2_name = input("\nEnter Player 2's name: ")
+    while not player2_name.strip():
+        print("Name cannot be empty. Please enter a valid name.")
+        player2_name = input("Enter Player 2's name: ")
 
     current_player = 0
 
