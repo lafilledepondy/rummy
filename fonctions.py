@@ -153,8 +153,8 @@ def distribute_cards(cards_per_player, cards):
     deck.extend(cards_list)
 
 def drop_card(player_name):
-    print("Enter the card you want to remove\n(in the format: ('2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 s'; '2 ♤' <=> '2 c'): ")
-    card_to_remove = input("\n>>> ")
+    print("\nEnter the card you want to remove\n(in the format: ('2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 s'; '2 ♤' <=> '2 c'): ")
+    card_to_remove = input(">>> ")
     
     rcard = card_to_remove.split()
     for shorthand, full_suit in suit_mapping.items():
@@ -279,8 +279,8 @@ def single_turn(player_name, real_name):
 
         #           MOVE
         elif act.lower() == 'm':
-            print("Card to move? (e.g. '2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 s'; '2 ♤' <=> '2 c')")
-            card_to_move = input("\n>>> ")
+            print("\nCard to move? (e.g. '2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 s'; '2 ♤' <=> '2 c')")
+            card_to_move = input(">>> ")
 
             rcard = card_to_move.split()
             for shorthand, full_suit in suit_mapping.items():
@@ -292,8 +292,8 @@ def single_turn(player_name, real_name):
                 input(f"\n>>> ERROR: {card_to_move} is not in your hand. Enter to continue ▶ ")
                 continue
 
-            print("Where? before which card? (e.g. '2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 s'; '2 ♤' <=> '2 c') ")
-            move_where = input("\n>>> ")
+            print("\nWhere? before which card? (e.g. '2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 s'; '2 ♤' <=> '2 c') ")
+            move_where = input(">>> ")
 
             if move_where:
                 rmove_where = move_where.split()
