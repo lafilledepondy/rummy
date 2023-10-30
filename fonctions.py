@@ -24,8 +24,8 @@ deck_of_cards = {'1 ♤': 1, '2 ♤': 2, '3 ♤': 3,  '4 ♤': 4, '5 ♤': 5,
 suit_mapping = {
     '❤': 'h',
     '◆': 'd',
-    '♤': 's',
-    '♧': 'c'
+    '♤': 'c',
+    '♧': 's'
 }
 
 deck = []
@@ -153,8 +153,8 @@ def distribute_cards(cards_per_player, cards):
     deck.extend(cards_list)
 
 def drop_card(player_name):
-    print("\n>>> Enter the card you want to remove: ")
-    card_to_remove = input("('2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 c'; '2 ♤' <=> '2 c') ")
+    print("Enter the card you want to remove\n(in the format: ('2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 s'; '2 ♤' <=> '2 c'): ")
+    card_to_remove = input("\n>>> ")
     
     rcard = card_to_remove.split()
     for shorthand, full_suit in suit_mapping.items():
@@ -166,7 +166,7 @@ def drop_card(player_name):
         if card_to_remove in hand:
             players_hands[player_name].remove(card_to_remove)
             add_pile(card_to_remove)
-            print(f"\nDropped {card_to_remove}")    
+            print(f"\nDropped {card_to_remove}.")    
             return card_to_remove
 
 def display_player_hand(player_name, real_name):
@@ -221,7 +221,7 @@ def display_pile():
     if len(pile) == 0:
         print("\nEmpty pile.")
     else:
-        print("\nThe card at the top of the pile is: ", pile[0])
+        print("\nThe card at the top of the pile:", pile[0])
 
 def add_pile(card):
     pile.insert(0, card)
@@ -236,7 +236,7 @@ def display_deck():
     if len(deck) == 0:
         print("\nEmpty deck.")
     else:
-        print("\nThe card at the top of the deck is: ", deck[0])
+        print("\nThe card at the top of the deck:", deck[0])
 
 def add_deck(card):
     deck.intert(0, card)
@@ -279,8 +279,8 @@ def single_turn(player_name, real_name):
 
         #           MOVE
         elif act.lower() == 'm':
-            print("\n>>> Card to move? ")
-            card_to_move = input("('2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 c'; '2 ♤' <=> '2 c') ")
+            print("Card to move? (e.g. '2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 s'; '2 ♤' <=> '2 c')")
+            card_to_move = input("\n>>> ")
 
             rcard = card_to_move.split()
             for shorthand, full_suit in suit_mapping.items():
@@ -292,8 +292,8 @@ def single_turn(player_name, real_name):
                 input(f"\n>>> ERROR: {card_to_move} is not in your hand. Enter to continue ▶ ")
                 continue
 
-            print("\n>>> Where? before which card?")
-            move_where = input("('2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 c'; '2 ♤' <=> '2 c') ")
+            print("Where? before which card? (e.g. '2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 s'; '2 ♤' <=> '2 c') ")
+            move_where = input("\n>>> ")
 
             if move_where:
                 rmove_where = move_where.split()
@@ -399,8 +399,8 @@ def game(num_players=2):
     - Each player will receive 10 cards.
     - You must create 3 sets of cards, 2 sets with 3 cards, and 1 set with 4 cards.
     - At least one valid "book" and one valid "run" are required.
-    - A book = same value but from different suits.
-    - A run = sequence of number from same suit.
+    - A book means same value but from different suits.
+    - A run means sequence of number from same suit.
     - During each turn, the player should choose a card either from the pile or from the deck to create sets.
     - After selecting a card, the player must discard a card onto the pile.
     - A player wins when they have successfully formed all the required sets of cards. 
