@@ -24,8 +24,8 @@ deck_of_cards = {'1 ♤': 1, '2 ♤': 2, '3 ♤': 3,  '4 ♤': 4, '5 ♤': 5,
 suit_mapping = {
     '❤': 'h',
     '◆': 'd',
-    '♤': 'c',
-    '♧': 's'
+    '♤': 's',
+    '♧': 'c'
 }
 
 deck = []
@@ -153,7 +153,7 @@ def distribute_cards(cards_per_player, cards):
     deck.extend(cards_list)
 
 def drop_card(player_name):
-    print("\nEnter the card you want to remove\n(in the format: ('2 ◆' <=> '2 d'; '2 ❤' <=> '2 h'; '2 ♧' <=> '2 s'; '2 ♤' <=> '2 c'): ")
+    print("\nEnter the card you want to remove\n(in the format: ('2 ◆' <=> '2 d'; '2 ❤ ' <=> '2 h'; '2 ♧' <=> '2 c'; '2 ♤' <=> '2 s'): ")
     card_to_remove = input(">>> ")
     
     rcard = card_to_remove.split()
